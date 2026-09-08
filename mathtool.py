@@ -31,13 +31,14 @@ except ValueError:
 if abs(a) > 10_000 or abs(b) > 10_000 or abs(c) > 10_000:
      print('Ошибка: значение вне допустимого диапазона', file=sys.stderr)
      sys.exit(1)
+     
 if a == 0:
     if b != 0:
         print('Уравнение линейное')
         x = -c / b
         print(f'x = {x:.3f}')
     else:
-        print('Ошибка: это не уравнение, неизвестное отсутствует', file=sys.stderr)
+        print('Ошибка: это не уравнение', file=sys.stderr)
         sys.exit(1)
 else:
     print('Уравнение квадратное')
