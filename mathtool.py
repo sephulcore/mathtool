@@ -2,7 +2,17 @@ import sys
 import math
 args = sys.argv[1:]
 if len(args) == 0 or args[0] == '--help':
-    print('mathtool - решение уравнений вида A*x^2 + B*x + C = 0')
+    print('mathtool — консольное приложение для решения алгебраических уравнений вида A*x^2 + B*x + C = 0,\n'
+        'где A, B, C — коэффициенты уравнения, задаваемые пользователем.\n'
+        'Приложение вычисляет и выводит действительные корни уравнения.\n'
+        '\n'
+        'Способы запуска:\n'
+        '  python mathtool.py                          — вывод справки\n'
+        '  python mathtool.py --help                    — вывод справки\n'
+        '  python mathtool.py solve                      — ввод коэффициентов с клавиатуры\n'
+        '  python mathtool.py solve -a 1 -b -3 -c 2      — решение с заданными коэффициентами\n'
+        '\n'
+        'Коэффициенты A, B, C — целые числа, по модулю не превышающие 10000.')
     sys.exit(0)
 
 if args[0] != 'solve':  
@@ -31,7 +41,7 @@ except ValueError:
 if abs(a) > 10_000 or abs(b) > 10_000 or abs(c) > 10_000:
      print('Ошибка: значение вне допустимого диапазона', file=sys.stderr)
      sys.exit(1)
-     
+
 if a == 0:
     if b != 0:
         print('Уравнение линейное')
