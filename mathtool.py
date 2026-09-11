@@ -19,24 +19,38 @@ if args[0] != 'solve':
     print(f'Ошибка:неизвестная команда', file=sys.stderr)
     sys.exit(1)
 
+
 if len(args) == 1:
-    a_s = input('Введите A:')
-    b_s = input('Введите B:')
-    c_s = input('Введите C:')
+    try:
+        a_s = int(input('Введите A:'))
+    except ValueError:
+        print('Ошибка: заданный коэффициент не является числом',file=sys.stderr)
+        sys.exit(1)
+    try:
+            b_s = int(input('Введите B:'))
+    except ValueError:
+        print('Ошибка: заданный коэффициент не является числом',file=sys.stderr)
+        sys.exit(1)
+    try:
+        c_s = int(input('Введите C:'))
+    except ValueError:
+        print('Ошибка: заданный коэффициент не является числом', file=sys.stderr)
+        sys.exit(1)
 elif len(args) == 7 and args[1] == '-a' and args[3] == '-b' and args[5] == '-c':
     a_s = args[2]
     b_s = args[4]
     c_s = args[6]
+
 else:
     print('Ошибка: неверный набор параметров', file=sys.stderr)
     sys.exit(1)
 
 try:
-        a = int(a_s)
-        b = int(b_s)
-        c = int(c_s)
+    a = int(a_s)
+    b = int(b_s)
+    c = int(c_s)
 except ValueError:
-    print('Ошибка: коэффициент не является целым числом', file=sys.stderr)
+    print('Ошибка: заданный коэффициент не является числом', file=sys.stderr)
     sys.exit(1)
 if abs(a) > 10_000 or abs(b) > 10_000 or abs(c) > 10_000:
      print('Ошибка: значение вне допустимого диапазона', file=sys.stderr)
