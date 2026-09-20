@@ -1,5 +1,6 @@
 import sys
 import math
+from calc import equation
 args = sys.argv[1:]
 if len(args) == 0 or args[0] == '--help':
     print('mathtool — консольное приложение для решения алгебраических уравнений вида A*x^2 + B*x + C = 0,\n'
@@ -56,25 +57,5 @@ if abs(a) > 10_000 or abs(b) > 10_000 or abs(c) > 10_000:
      print('Ошибка: значение вне допустимого диапазона', file=sys.stderr)
      sys.exit(1)
 
-if a == 0:
-    if b != 0:
-        print('Уравнение линейное')
-        x = -c / b
-        print(f'x = {x:.3f}')
-    else:
-        print('Ошибка: это не уравнение', file=sys.stderr)
-        sys.exit(1)
-else:
-    print('Уравнение квадратное')
-    d = b * b - 4 * a * c
-    print(f'D = {d}')
-    if d > 0:
-        x1 = (-b + math.sqrt(d)) / (2 * a)
-        x2 = (-b - math.sqrt(d)) / (2 * a)
-        print(f'x1 = {x1:.3f}')
-        print(f'x2 = {x2:.3f}')
-    elif d == 0:
-        x = -b / (2 * a)
-        print(f'x = {x:.3f}')
-    else:
-        print('Действительных корней нет')
+kind, d, roots = equation.solve(a, b, c)
+print(kind, d, roots)
