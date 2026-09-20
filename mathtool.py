@@ -1,24 +1,15 @@
 import sys
 import math
 from calc import equation
-args = sys.argv[1:]
-if len(args) == 0 or args[0] == '--help':
-    print('mathtool — консольное приложение для решения алгебраических уравнений вида A*x^2 + B*x + C = 0,\n'
-        'где A, B, C — коэффициенты уравнения, задаваемые пользователем.\n'
-        'Приложение вычисляет и выводит действительные корни уравнения.\n'
-        '\n'
-        'Способы запуска:\n'
-        '  python mathtool.py                          — вывод справки\n'
-        '  python mathtool.py --help                    — вывод справки\n'
-        '  python mathtool.py solve                      — ввод коэффициентов с клавиатуры\n'
-        '  python mathtool.py solve -a 1 -b -3 -c 2      — решение с заданными коэффициентами\n'
-        '\n'
-        'Коэффициенты A, B, C — целые числа, по модулю не превышающие 10000.')
-    sys.exit(0)
+from cli import build_parser
 
-if args[0] != 'solve':  
-    print(f'Ошибка:неизвестная команда', file=sys.stderr)
-    sys.exit(1)
+
+parser = build_parser()
+args = parser.parse_args()
+
+if args.command is None:
+    parser.print_help()
+    sys.exit(0)
 
 
 if len(args) == 1:
@@ -53,9 +44,23 @@ try:
 except ValueError:
     print('Ошибка: заданный коэффициент не является числом', file=sys.stderr)
     sys.exit(1)
-if abs(a) > 10_000 or abs(b) > 10_000 or abs(c) > 10_000:
-     print('Ошибка: значение вне допустимого диапазона', file=sys.stderr)
-     sys.exit(1)
+try:
+    equation.valid_coefs(a, b, c)
+except ValueError as error:
+    print(f'{error}', file=sys.stderr)
+    sys.exit(1)
 
 kind, d, roots = equation.solve(a, b, c)
-print(kind, d, roots)
+if kind == "линейное":
+    print('Уравнение линейное')
+    print(f'x = {roots[0]:.3f}')
+else:
+    print('Уравнение квадратное')
+    print(f'Дискриминант: {d}')
+    if len(roots) == 2:
+        print(f'x1 = {roots[0]:.3f}')
+        print(f'x2 = {roots[1]:.3f}')
+    elif len(roots) == 1:
+        print(f'x = {roots[0]:.3f}')
+    else:
+        print('Действительных корней нет')

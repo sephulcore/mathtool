@@ -1,4 +1,5 @@
 import math
+
 MAX_VALUE = 10_000
 
 def valid_coefs(a, b, c):
@@ -6,6 +7,7 @@ def valid_coefs(a, b, c):
         raise ValueError('Ошибка: значение вне допустимого диапазона')
     if a == 0 and b == 0:
         raise ValueError('Ошибка: это не уравнение, неизвестное отсутствует')
+
 def solve(a, b, c):
     if a == 0:
         if b != 0:
