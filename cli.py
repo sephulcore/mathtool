@@ -11,4 +11,10 @@ def build_parser():
 
     stats_parser = subparsers.add_parser('stats', help = 'Показатели последовательности чисел', allow_abbrev=False)
     stats_parser.add_argument('--input', help='Имя файла с числами')
+
+    series_parser = subparsers.add_parser('series', help='сумма числового ряда', allow_abbrev=False)
+    series_parser.add_argument('--func', required=True, choices=['sqplus', 'third'], help='какой ряд суммировать')
+    group = series_parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--terms', type=int, help='количество слагаемых')
+    group.add_argument('--eps', type=float, help='точность вычисления')
     return parser
