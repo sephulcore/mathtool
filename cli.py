@@ -8,4 +8,7 @@ def build_parser():
     solve_parser.add_argument('-a', type=int, help = 'коэффициент A')
     solve_parser.add_argument('-b', type=int, help = 'коэффициент B')
     solve_parser.add_argument('-c', type=int, help = 'коэффициент C')
+
+    stats_parser = subparsers.add_parser('stats', help = 'Показатели последовательности чисел', allow_abbrev=False)
+    stats_parser.add_argument('--input', help='Имя файла с числами')
     return parser
