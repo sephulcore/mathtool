@@ -1,10 +1,14 @@
 import math
 
 MAX_VALUE = 10_000
-
+def check_range(name, value):
+    if abs(value) > MAX_VALUE:
+        raise ValueError(f'коэффициент {name} вне допустимого диапазона')
 def valid_coefs(a, b, c):
-    if abs(a) > MAX_VALUE or abs(b) > MAX_VALUE or abs(c) > MAX_VALUE:
-        raise ValueError('значение вне допустимого диапазона')
+    coefficients = {"A": a, "B": b, "C": c}
+    for name, value in coefficients.items():
+        if abs(value) > MAX_VALUE:
+            raise ValueError(f'коэффициент {name} вне допустимого диапазона')
     if a == 0 and b == 0:
         raise ValueError('это не уравнение, неизвестное отсутствует')
 

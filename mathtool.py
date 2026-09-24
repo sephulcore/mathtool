@@ -6,10 +6,19 @@ def handle_solve(args):
     if args.a is None and args.b is None and args.c is None:
         try:
             a_s = int(input('Введите A:'))
+        except ValueError:
+            raise ValueError('заданный коэффициент не является числом')
+        equation.check_range('A', a_s)
+        try:
             b_s = int(input('Введите B:'))
+        except ValueError:
+            raise ValueError('заданный коэффициент не является числом')
+        equation.check_range('B', b_s)
+        try:
             c_s = int(input('Введите C:'))
         except ValueError:
             raise ValueError('заданный коэффициент не является числом')
+        equation.check_range('C',c_s)
     elif args.a is not None and args.b is not None and args.c is not None:
         a_s = args.a
         b_s = args.b
