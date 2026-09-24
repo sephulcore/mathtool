@@ -11,31 +11,22 @@ if args.command is None:
     parser.print_help()
     sys.exit(0)
 
-
-if len(args) == 1:
+if args.a is None and args.b is None and args.c is None:
     try:
         a_s = int(input('Введите A:'))
-    except ValueError:
-        print('Ошибка: заданный коэффициент не является числом',file=sys.stderr)
-        sys.exit(1)
-    try:
-            b_s = int(input('Введите B:'))
-    except ValueError:
-        print('Ошибка: заданный коэффициент не является числом',file=sys.stderr)
-        sys.exit(1)
-    try:
+        b_s = int(input('Введите B:'))
         c_s = int(input('Введите C:'))
     except ValueError:
         print('Ошибка: заданный коэффициент не является числом', file=sys.stderr)
         sys.exit(1)
-elif len(args) == 7 and args[1] == '-a' and args[3] == '-b' and args[5] == '-c':
-    a_s = args[2]
-    b_s = args[4]
-    c_s = args[6]
-
+elif args.a is not None and args.b is not None and args.c is not None:
+    a_s = args.a
+    b_s = args.b
+    c_s = args.c
 else:
-    print('Ошибка: неверный набор параметров', file=sys.stderr)
+    print('Ошибка: укажите все три коэффициента либо ни одного', file=sys.stderr)
     sys.exit(1)
+
 
 try:
     a = int(a_s)
