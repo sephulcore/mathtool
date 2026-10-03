@@ -4,12 +4,12 @@ MAX_COUNT = 20
 def validate_numbers(numbers):
     if len(numbers) == 0:
         raise ValueError('последовательность пуста')
-    if len(numbers) > 20:
+    if len(numbers) > MAX_COUNT:
         raise ValueError('последовательность больше 20-ти чисел')
     for number in numbers:
         if not math.isfinite(number):
             raise ValueError('недопустимое значение')
-        if abs(number) > 10000:
+        if abs(number) > MAX_VALUE:
             raise ValueError('значение вне допустимого диапазона')
         
 def total(numbers):
@@ -27,7 +27,7 @@ def sum_squares(numbers):
         result += number ** 2
     return result
 
-def quadrat_mean(numbers):
+def square_mean(numbers):
     return math.sqrt(sum_squares(numbers) / len(numbers))
 
 def sum_square_deviation(numbers):
@@ -79,7 +79,7 @@ itog = [
     ('Сумма', total, '.3f'),
     ('Ср. арифм.', mean, '.3f'),
     ('Сумма кв.', sum_squares, '.3f'),
-    ('Ср. кв.', quadrat_mean, '.3f'),
+    ('Ср. кв.', square_mean, '.3f'),
     ('Дисперсия', var, '.3f'),
     ('СКО', square_otkl, '.3f'),
     ('Станд. откл.', st_deviation, '.3f'),

@@ -17,4 +17,11 @@ def build_parser():
     group = series_parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--terms', type=int, help='количество слагаемых')
     group.add_argument('--eps', type=float, help='точность вычисления')
+
+
+    integrate_parser = subparsers.add_parser('integrate', help='численное интегрирование', allow_abbrev=False)
+    integrate_parser.add_argument('--func', required=True, choices=['ratio', 'root'], help='какую функцию интегрировать')
+    integrate_parser.add_argument('--from', dest='lower', type=float, required=True, help='нижний предел')
+    integrate_parser.add_argument('--to', dest='upper', type=float, required=True, help='верхний предел')
+    integrate_parser.add_argument('--steps', type=int, required=True, help='количество прямоугольников')
     return parser

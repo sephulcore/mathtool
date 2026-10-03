@@ -2,6 +2,7 @@ import sys
 from calc import equation
 from calc import stats
 from calc import series
+from calc import integrate
 from cli import build_parser
 
 def handle_solve(args):
@@ -97,6 +98,16 @@ def handle_series(args):
     print(f'Сумма ряда: {result:.4f}')
     return 0
 
+def handle_integrate(args):
+    func, formula, low, high, inclusive = integrate.FUNCTIONS[args.func]
+
+    integrate.valid_bounds(args.lower, args.upper, low, high, inclusive)
+    integrate.valid_steps(args.steps)
+
+    print(formula)
+    result = integrate.integrate(func, args.lower, args.upper, args.steps)
+    print(f'Значение интеграла: {result:.4f}')
+    return 0
 def main(argv):
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -111,6 +122,8 @@ def main(argv):
             return handle_stats(args)
         elif args.command == 'series':
             return handle_series(args)
+        elif args.command == 'integrate':
+            return handle_integrate(args)
     except (ValueError,OSError) as error:
         print(f'Ошибка: {error}', file = sys.stderr)
         return 1
