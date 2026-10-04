@@ -79,6 +79,7 @@ def read_numbers(source):
                 number = float(word)
             except ValueError:
                 raise ValueError(f'{word} не является числом')
+            stats.check_number(number)
             numbers.append(number)
     return numbers
 

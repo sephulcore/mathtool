@@ -2,12 +2,15 @@ import math
 MAX_STEPS = 100000
 
 def func_ratio(x):
+    """Вычисляет значение функции x/(x+1) в точке x."""
     return x / (x+1)
 
 def func_root(x):
+    """Вычисляет значение функции sqrt(x^2+1) в точке x."""
     return math.sqrt(x * x + 1)
 
 def valid_steps(steps):
+    """Проверяет, что количество прямоугольников steps в диапазоне 1-MAX_STEPS."""
     if steps < 1 or steps > MAX_STEPS:
         raise ValueError('количество прямоугольников вне диапазона')
 
@@ -17,6 +20,7 @@ FUNCTIONS = {
 }
 
 def integrate(func, a, b, steps):
+    """Вычисляет интеграл функции func на [a,b] методом левых прямоугольников."""   
     dx = (b - a) / steps
     result = 0
     for i in range(steps):
@@ -25,6 +29,7 @@ def integrate(func, a, b, steps):
     return result
 
 def valid_bounds(a, b, low, high, inclusive):
+    """Проверяет пределы интегрирования: конечность, порядок и попадание в промежуток функции."""
     if not math.isfinite(a) or not math.isfinite(b):
         raise ValueError('предел должен быть конечным числом')
     if a >= b:

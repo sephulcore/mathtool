@@ -2,9 +2,12 @@ import math
 
 MAX_VALUE = 10_000
 def check_range(name, value):
+    """Проверяет, что значение value по модулю не превышает MAX_VALUE."""
     if abs(value) > MAX_VALUE:
         raise ValueError(f'коэффициент {name} вне допустимого диапазона')
+
 def valid_coefs(a, b, c):
+    """Проверяет коэффициенты уравнения: диапазон и условие "не уравнение"."""
     coefficients = {"A": a, "B": b, "C": c}
     for name, value in coefficients.items():
         if abs(value) > MAX_VALUE:
@@ -13,6 +16,7 @@ def valid_coefs(a, b, c):
         raise ValueError('это не уравнение, неизвестное отсутствует')
 
 def solve(a, b, c):
+    """Решает уравнение A*x^2+B*x+C=0, возвращает (вид, дискриминант, корни)."""
     if a == 0:
         if b != 0:
             x = -c / b
