@@ -3,13 +3,14 @@ MAX_VALUE = 10000
 MAX_COUNT = 20
 
 def check_number(number):
+    """Проверяет одно число: конечность и допустимый диапазон."""
     if not math.isfinite(number):
         raise ValueError('недопустимое значение')
     if abs(number) > MAX_VALUE:
         raise ValueError('значение вне допустимого диапазона')
 
 def validate_numbers(numbers):
-    """Проверяет список чисел: непустой, не длиннее MAX_COUNT, все конечные и в диапазоне."""
+    """Проверяет список чисел целиком: непустой и не длиннее MAX_COUNT (диапазон каждого числа уже проверен при чтении)."""
     if len(numbers) == 0:
         raise ValueError('последовательность пуста')
     if len(numbers) > MAX_COUNT:

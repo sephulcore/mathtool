@@ -1,62 +1,491 @@
 Тесты для mathtool.py
 
+===========================================================
+Общие проверки
+===========================================================
+
 Тест 1
+
 Команда: python mathtool.py
-Что должно произойти: выводится справка
+
+stdout:
+usage: mathtool [-h] {solve,stats,series,integrate} ...
+
+Расчёты над уравнениями и числовыми последовательностями
+
+positional arguments:
+  {solve,stats,series,integrate}
+    solve               решение уравнения A*x^2 + B*x + C = 0
+    stats               Показатели последовательности чисел
+    series              сумма числового ряда
+    integrate           численное интегрирование
+
+options:
+  -h, --help            show this help message and exit
+
 Код возврата: 0
+
 
 Тест 2
+
 Команда: python mathtool.py --help
-Что должно произойти: выводится справка
+
+stdout:
+та же справка, что в тесте 1
+
 Код возврата: 0
+
 
 Тест 3
+
 Команда: python mathtool.py 123
-Что должно произойти: ошибка "неизвестная команда"
-Код возврата: 1
+
+stderr:
+usage: mathtool [-h] {solve,stats,series,integrate} ...
+mathtool: error: argument command: invalid choice: '123' (choose from 'solve', 'stats', 'series', 'integrate')
+
+Код возврата: 2
+
 
 Тест 4
+
 Команда: python mathtool.py solve extra
-Что должно произойти: ошибка "неверный набор параметров"
-Код возврата: 1
+
+stderr:
+usage: mathtool solve [-h] [-a A] [-b B] [-c C]
+mathtool solve: error: unrecognized arguments: extra
+
+Код возврата: 2
+
+
+===========================================================
+Команда solve
+===========================================================
 
 Тест 5
+
 Команда: python mathtool.py solve -a 1 -b -3 -c 2
-Что должно произойти: квадратное уравнение, D = 1, x1 = 2.000, x2 = 1.000
+
+stdout:
+Уравнение квадратное
+Дискриминант: 1
+x1 = 2.000
+x2 = 1.000
+
 Код возврата: 0
+
 
 Тест 6
+
 Команда: python mathtool.py solve -a 1 -b -2 -c 1
-Что должно произойти: квадратное уравнение, D = 0, x = 1.000
+
+stdout:
+Уравнение квадратное
+Дискриминант: 0
+x = 1.000
+
 Код возврата: 0
+
 
 Тест 7
+
 Команда: python mathtool.py solve -a 1 -b 0 -c 5
-Что должно произойти: квадратное уравнение, D = -20, действительных корней нет
+
+stdout:
+Уравнение квадратное
+Дискриминант: -20
+Действительных корней нет
+
 Код возврата: 0
+
 
 Тест 8
-Команда: python mathtool.py solve -a 0 -b 2 -c -4
-Что должно произойти: линейное уравнение, x = 2.000
+
+Команда: python mathtool.py solve -a 0 -b 2 -c -5
+
+stdout:
+Уравнение линейное
+x = 2.500
+
 Код возврата: 0
+
 
 Тест 9
+
 Команда: python mathtool.py solve -a 0 -b 0 -c 0
-Что должно произойти: ошибка "это не уравнение"
+
+stderr:
+Ошибка: это не уравнение, неизвестное отсутствует
+
 Код возврата: 1
+
 
 Тест 10
+
 Команда: python mathtool.py solve -a abc -b 1 -c 1
-Что должно произойти: ошибка "не является целым числом"
-Код возврата: 1
+
+stderr:
+usage: mathtool solve [-h] [-a A] [-b B] [-c C]
+mathtool solve: error: argument -a: invalid int value: 'abc'
+
+Код возврата: 2
+
 
 Тест 11
+
 Команда: python mathtool.py solve -a 50000 -b 1 -c 1
-Что должно произойти: ошибка "вне допустимого диапазона"
+
+stderr:
+Ошибка: коэффициент A вне допустимого диапазона
+
 Код возврата: 1
 
+
 Тест 12
+
 Команда: python mathtool.py solve
-Ввод: 1, потом -3, потом 2
-Что должно произойти: квадратное уравнение, D = 1, x1 = 2.000, x2 = 1.000
+
+stdin:
+1
+-3
+2
+
+stdout:
+Введите A:Введите B:Введите C:Уравнение квадратное
+Дискриминант: 1
+x1 = 2.000
+x2 = 1.000
+
 Код возврата: 0
+
+
+===========================================================
+Команда stats
+===========================================================
+
+Тест 13
+
+Команда: python mathtool.py stats --input numbers.txt
+
+stdout:
+Количество: 3
+Сумма: 10.000
+Ср. арифм.: 3.333
+Сумма кв.: 42.000
+Ср. кв.: 3.742
+Дисперсия: 2.889
+СКО: 1.700
+Станд. откл.: 2.082
+Наименьшее: 1.000
+Наибольшее: 5.000
+Положительных: 3
+Отрицательных: 0
+
+Код возврата: 0
+
+
+Тест 14
+
+Команда: "4 1 5" | python mathtool.py stats
+
+stdout:
+Количество: 3
+Сумма: 10.000
+Ср. арифм.: 3.333
+Сумма кв.: 42.000
+Ср. кв.: 3.742
+Дисперсия: 2.889
+СКО: 1.700
+Станд. откл.: 2.082
+Наименьшее: 1.000
+Наибольшее: 5.000
+Положительных: 3
+Отрицательных: 0
+
+Код возврата: 0
+
+
+Тест 15
+
+Команда: "7" | python mathtool.py stats
+
+stdout:
+Количество: 1
+Сумма: 7.000
+Ср. арифм.: 7.000
+Сумма кв.: 49.000
+Ср. кв.: 7.000
+Дисперсия: 0.000
+СКО: 0.000
+Станд. откл.: не существует
+Наименьшее: 7.000
+Наибольшее: 7.000
+Положительных: 1
+Отрицательных: 0
+
+Код возврата: 0
+
+
+Тест 16
+
+Команда: "" | python mathtool.py stats
+
+stderr:
+Ошибка: последовательность пуста
+
+Код возврата: 1
+
+
+Тест 17
+
+Команда: "1 2 abc" | python mathtool.py stats
+
+stderr:
+Ошибка: abc не является числом
+
+Код возврата: 1
+
+
+Тест 18
+
+Команда: python mathtool.py stats --input nosuch.txt
+
+stderr:
+Ошибка: [Errno 2] No such file or directory: 'nosuch.txt'
+
+Код возврата: 1
+
+
+===========================================================
+Команда series
+===========================================================
+
+Тест 19
+
+Команда: python mathtool.py series --func sqplus --terms 1
+
+stdout:
+S = 1/(1^2+1) - 1/(2^2+1) + 1/(3^2+1) - ...
+Слагаемых: 1
+Сумма ряда: 0.5000
+
+Код возврата: 0
+
+
+Тест 20
+
+Команда: python mathtool.py series --func sqplus --terms 6
+
+stdout:
+S = 1/(1^2+1) - 1/(2^2+1) + 1/(3^2+1) - ...
+Слагаемых: 6
+Сумма ряда: 0.3526
+
+Код возврата: 0
+
+
+Тест 21
+
+Команда: python mathtool.py series --func sqplus --eps 0.0001
+
+stdout:
+S = 1/(1^2+1) - 1/(2^2+1) + 1/(3^2+1) - ...
+Слагаемых: 100
+Сумма ряда: 0.3639
+
+Код возврата: 0
+
+
+Тест 22
+
+Команда: python mathtool.py series --func third --eps 0.0001
+
+stdout:
+S = 1/3 - 1/6 + 1/9 - ...
+Слагаемых: 3334
+Сумма ряда: 0.2310
+
+Код возврата: 0
+
+
+Тест 23
+
+Команда: python mathtool.py series --func sqplus --terms 10000
+
+stdout:
+S = 1/(1^2+1) - 1/(2^2+1) + 1/(3^2+1) - ...
+Слагаемых: 10000
+Сумма ряда: 0.3640
+
+Код возврата: 0
+
+
+Тест 24
+
+Команда: python mathtool.py series --func sqplus --terms 10001
+
+stderr:
+Ошибка: количество слагаемых вне диапазона
+
+Код возврата: 1
+
+
+Тест 25
+
+Команда: python mathtool.py series --func sqplus --eps 0.001
+
+stderr:
+Ошибка: точность вне диапазона
+
+Код возврата: 1
+
+
+Тест 26
+
+Команда: python mathtool.py series --func sqplus --terms 6 --eps 0.0001
+
+stderr:
+usage: mathtool series [-h] --func {sqplus,third} (--terms TERMS | --eps EPS)
+mathtool series: error: argument --eps: not allowed with argument --terms
+
+Код возврата: 2
+
+
+Тест 27
+
+Команда: python mathtool.py series --func sqplus --terms 0
+
+stderr:
+Ошибка: количество слагаемых вне диапазона
+
+Код возврата: 1
+
+
+Тест 28
+
+Команда: python mathtool.py series --func sqplus --eps 0
+
+stderr:
+Ошибка: точность вне диапазона
+
+Код возврата: 1
+
+
+Тест 29
+
+Команда: python mathtool.py series --func third --eps 0.000001
+
+stderr:
+Ошибка: точность не достигнута
+
+Код возврата: 1
+
+
+Tест 30
+
+Команда: python mathtool.py series --func sqplus
+
+stderr:
+usage: mathtool series [-h] --func {sqplus,third} (--terms TERMS | --eps EPS)
+mathtool series: error: one of the arguments --terms --eps is required
+
+Код возврата: 2
+
+
+===========================================================
+Команда integrate
+===========================================================
+
+Тест 31
+
+Команда: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 10
+
+stdout:
+F(x) = x / (x + 1)
+Значение интеграла: 15.7335
+
+Код возврата: 0
+
+
+Тест 32
+
+Команда: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 1000
+
+stdout:
+F(x) = x / (x + 1)
+Значение интеграла: 16.9459
+
+Код возврата: 0
+
+
+Тест 33
+
+Команда: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 10000
+
+stdout:
+F(x) = x / (x + 1)
+Значение интеграла: 16.9545
+
+Код возврата: 0
+
+
+Тест 34
+
+Команда: python mathtool.py integrate --func ratio --from 5 --to 10 --steps 1000
+
+stdout:
+F(x) = x / (x + 1)
+Значение интеграла: 4.3937
+
+Код возврата: 0
+
+
+Тест 35
+
+Команда: python mathtool.py integrate --func root --from -4.9 --to 4.9 --steps 1000
+
+stdout:
+F(x) = sqrt(x^2 + 1)
+Значение интеграла: 26.7976
+
+Код возврата: 0
+
+
+Тест 36
+
+Команда: python mathtool.py integrate --func root --from -5 --to 5 --steps 100
+
+stderr:
+Ошибка: предел вне промежутка
+
+Код возврата: 1
+
+
+Тест 37
+
+Команда: python mathtool.py integrate --func ratio --from 4 --to 1 --steps 100
+
+stderr:
+Ошибка: левая граница должна быть меньше правой
+
+Код возврата: 1
+
+
+Тест 38
+
+Команда: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 100001
+
+stderr:
+Ошибка: количество прямоугольников вне диапазона
+
+Код возврата: 1
+
+
+Тест 39
+
+Команда: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 0
+
+stderr:
+Ошибка: количество прямоугольников вне диапазона
+
+Код возврата: 1
