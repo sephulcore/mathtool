@@ -59,7 +59,9 @@ def handle_stats(args):
         with open(args.input, encoding = 'utf-8-sig') as handle:
             numbers = read_numbers(handle)
     else:
-        numbers = read_numbers(sys.stdin)
+        text = input()
+        numbers = read_numbers(text.split())
+
 
     stats.validate_numbers(numbers)
     print(f'Количество: {len(numbers)}')
