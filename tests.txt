@@ -398,7 +398,7 @@ mathtool series: error: one of the arguments --terms --eps is required
 
 Тест 31
 
-Команда: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 10
+Команда: python mathtool.py integrate --func ratio --from 0 --to 1.5 --steps 10
 
 stdout:
 F(x) = x / (x + 1)

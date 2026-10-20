@@ -3,6 +3,7 @@ from calc import equation
 from calc import stats
 from calc import series
 from calc import integrate
+from calc import arrays
 from cli import build_parser
 
 def handle_solve(args):
@@ -59,8 +60,14 @@ def handle_stats(args):
         with open(args.input, encoding = 'utf-8-sig') as handle:
             numbers = read_numbers(handle)
     else:
-        text = input()
-        numbers = read_numbers(text.split())
+        numbers = []
+        print('Введите числа:')
+        while True:
+            text = input()
+            if text == "":
+                break
+            numbers.extend(text.split())
+        numbers = read_numbers(numbers)
 
 
     stats.validate_numbers(numbers)
@@ -111,6 +118,49 @@ def handle_integrate(args):
     result = integrate.integrate(func, args.lower, args.upper, args.steps)
     print(f'Значение интеграла: {result:.4f}')
     return 0
+def read_array(path=None):
+    if path:
+        with open(path, encoding="utf-8-sig") as file:
+            text = file.read()
+    else:
+        print("Введите числа:", file=sys.stderr)
+        lines = []
+        while True:
+            try:
+                line = input()
+            except EOFError:
+                break
+            if not line.strip():
+                break
+            lines.append(line)
+        text = " ".join(lines)
+    text = text.replace(",", " ")
+    words = text.split()
+    values = []
+    for word in words:
+        try:
+            value = int(word)
+        except ValueError:
+            raise ValueError(f'{word} не является числом')
+        values.append(value)
+    if len(values) < 1:
+        raise ValueError('Необходимо ввести хотя бы одно число')
+    if len(values) > arrays.MAX_COUNT:
+        raise ValueError('Количество чисел превышает максимально допустимое')
+    for value in values:
+        if value < arrays.MIN_VALUE or value > arrays.MAX_VALUE:
+            raise ValueError(f'Число {value} выходит за допустимый диапазон')
+    return values
+
+def write_array(path, values):
+    with open(path, "w", encoding="utf-8") as file:
+        file.write(" ".join(str(x) for x in values)+ "\n")
+
+def handle_fill(args):
+    arrays.valid_fill(args.count, args.min, args.max)
+    array = arrays.fill(args.count, args.min, args.max, args.seed)
+
+
 def main(argv):
     parser = build_parser()
     args = parser.parse_args(argv)
