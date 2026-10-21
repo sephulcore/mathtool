@@ -17,4 +17,17 @@ def bubble(values, descending):
         if swapped == False:
             break
 
-METHODS = {'bubble': bubble}
+def selection(values, descending=False):
+    n = len(values)
+    for i in range(0, n - 1):
+        best = i
+        for j in range(i + 1, n):
+            if out_of_order(values[best], values[j], descending):
+                best = j
+        values[i], values[best] = values[best], values[i]
+
+
+METHODS = {
+    'bubble': bubble,
+    'selection': selection
+}
