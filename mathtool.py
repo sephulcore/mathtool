@@ -179,6 +179,19 @@ def handle_sort(args):
     print(part + '; Массив отсортирован.')
     return 0
 
+def handle_search(args):
+    if abs(args.value) > arrays.MAX_SEARCH:
+        raise ValueError('модуль искомого больше максимального значения')
+    values = read_array(args.input)
+    if not arrays.is_ascending(values):
+        raise ValueError('массив не отсортирован по возрастанию')
+    index = arrays.binary_search(values, args.value)
+    if index is None:
+        print(f'Значение {args.value} не найдено')
+        return 1
+    print(f'Значение {args.value} имеет элемент с индексом {index + 1}')
+    return 0
+        
 def main(argv):
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -199,6 +212,8 @@ def main(argv):
             return handle_fill(args)
         elif args.command == 'sort':
             return handle_sort(args)
+        elif args.command == 'search':
+            return handle_search(args)
     except (ValueError,OSError) as error:
         print(f'Ошибка: {error}', file = sys.stderr)
         return 1

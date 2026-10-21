@@ -39,4 +39,8 @@ def build_parser():
     sort_parser.add_argument('--order', default='asc', choices=['asc', 'desc'], help='прямой или обратный порядок')
     sort_parser.add_argument('-i', '--input', help='файл с числами для сортировки')
     sort_parser.add_argument('-o', '--output', help='файл для отсортированного массива')
+
+    search_parser = subparsers.add_parser('search', help='бинарный поиск', allow_abbrev=False)
+    search_parser.add_argument('value', type=int, help='искомое значение')
+    search_parser.add_argument('-i', '--input', help='файл с отсортированными числами')
     return parser
