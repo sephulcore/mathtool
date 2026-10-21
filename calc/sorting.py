@@ -26,8 +26,19 @@ def selection(values, descending=False):
                 best = j
         values[i], values[best] = values[best], values[i]
 
+def insertion(values, descending=False):
+    n = len(values)
+    for i in range(1, n):
+        current = values[i]
+        j = i
+        while j > 0 and out_of_order(values[j - 1], current, descending):
+            values[j] = values[j - 1]
+            j = j - 1
+        values[j] = current
+
 
 METHODS = {
     'bubble': bubble,
-    'selection': selection
+    'selection': selection,
+    'insertion': insertion
 }
