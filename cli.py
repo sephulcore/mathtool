@@ -1,5 +1,6 @@
 import argparse
 from calc import arrays
+from calc import sorting
 
 def build_parser():
     parser = argparse.ArgumentParser(prog='mathtool', description='расчёты над уравнениями и числовыми последовательностями', allow_abbrev=False)
@@ -32,4 +33,10 @@ def build_parser():
     fill_parser.add_argument('--max',type=int, default=arrays.MAX_VALUE, help='верхняя граница значений')
     fill_parser.add_argument('--seed', type=int, help='начальное значение генератора')
     fill_parser.add_argument('-o', '--output', type=str, help='файл для созданного массива')
+
+    sort_parser = subparsers.add_parser('sort', help='сортировка массива', allow_abbrev=False)
+    sort_parser.add_argument('-m', '--method', required=True, choices=sorted(sorting.METHODS), help='какой метод сортировки использовать')
+    sort_parser.add_argument('--order', default='asc', choices=['asc', 'desc'], help='прямой или обратный порядок')
+    sort_parser.add_argument('-i', '--input', help='файл с числами для сортировки')
+    sort_parser.add_argument('-o', '--output', help='файл для отсортированного массива')
     return parser

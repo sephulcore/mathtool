@@ -4,6 +4,7 @@ from calc import stats
 from calc import series
 from calc import integrate
 from calc import arrays
+from calc import sorting
 from cli import build_parser
 
 def handle_solve(args):
@@ -166,6 +167,17 @@ def handle_fill(args):
         print(" ".join(str(x) for x in array))
     return 0
 
+def handle_sort(args):
+    array = read_array(args.input)
+    method = sorting.METHODS[args.method]
+    method(array, args.order == 'desc')
+    if args.output:
+        write_array(args.output, array)
+        part = f'Записано элементов: {len(array)} в файл {args.output}'
+    else:
+        part = ' '.join(str(x) for x in array)
+    print(part + '; Массив отсортирован.')
+    return 0
 
 def main(argv):
     parser = build_parser()
@@ -185,6 +197,8 @@ def main(argv):
             return handle_integrate(args)
         elif args.command == 'fill':
             return handle_fill(args)
+        elif args.command == 'sort':
+            return handle_sort(args)
     except (ValueError,OSError) as error:
         print(f'Ошибка: {error}', file = sys.stderr)
         return 1
