@@ -1,7 +1,8 @@
 import argparse
+from calc import arrays
 
 def build_parser():
-    parser = argparse.ArgumentParser(prog='mathtool', description='Расчёты над уравнениями и числовыми последовательностями', allow_abbrev=False)
+    parser = argparse.ArgumentParser(prog='mathtool', description='расчёты над уравнениями и числовыми последовательностями', allow_abbrev=False)
     subparsers = parser.add_subparsers(dest='command')
 
     solve_parser = subparsers.add_parser('solve', help = 'решение уравнения A*x^2 + B*x + C = 0', allow_abbrev=False)
@@ -9,7 +10,7 @@ def build_parser():
     solve_parser.add_argument('-b', type=int, help = 'коэффициент B')
     solve_parser.add_argument('-c', type=int, help = 'коэффициент C')
 
-    stats_parser = subparsers.add_parser('stats', help = 'Показатели последовательности чисел', allow_abbrev=False)
+    stats_parser = subparsers.add_parser('stats', help = 'показатели последовательности чисел', allow_abbrev=False)
     stats_parser.add_argument('--input', help='Имя файла с числами')
 
     series_parser = subparsers.add_parser('series', help='сумма числового ряда', allow_abbrev=False)
@@ -24,4 +25,11 @@ def build_parser():
     integrate_parser.add_argument('--from', dest='lower', type=float, required=True, help='нижний предел')
     integrate_parser.add_argument('--to', dest='upper', type=float, required=True, help='верхний предел')
     integrate_parser.add_argument('--steps', type=int, required=True, help='количество прямоугольников')
+
+    fill_parser = subparsers.add_parser('fill', help='создание случайного набора чисел', allow_abbrev=False)
+    fill_parser.add_argument('-c', '--count', type = int, required=True, help='количество элементов')
+    fill_parser.add_argument('--min',type=int, default=arrays.MIN_VALUE, help='нижняя граница значений')
+    fill_parser.add_argument('--max',type=int, default=arrays.MAX_VALUE, help='верхняя граница значений')
+    fill_parser.add_argument('--seed', type=int, help='начальное значение генератора')
+    fill_parser.add_argument('-o', '--output', type=str, help='файл для созданного массива')
     return parser

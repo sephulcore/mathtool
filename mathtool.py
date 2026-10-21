@@ -159,6 +159,12 @@ def write_array(path, values):
 def handle_fill(args):
     arrays.valid_fill(args.count, args.min, args.max)
     array = arrays.fill(args.count, args.min, args.max, args.seed)
+    if args.output:
+        write_array(args.output, array)
+        print(f'Записано элементов: {len(array)} в файл {args.output}')
+    else:
+        print(" ".join(str(x) for x in array))
+    return 0
 
 
 def main(argv):
@@ -177,6 +183,8 @@ def main(argv):
             return handle_series(args)
         elif args.command == 'integrate':
             return handle_integrate(args)
+        elif args.command == 'fill':
+            return handle_fill(args)
     except (ValueError,OSError) as error:
         print(f'Ошибка: {error}', file = sys.stderr)
         return 1

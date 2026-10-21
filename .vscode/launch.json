@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": ["series", "--func", "cube", "--terms", "1"]
+            "args": ["fill", "-c", "5", "--seed", "42"]
         }
     ]
 }
