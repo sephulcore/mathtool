@@ -1,4 +1,4 @@
-from calc import arrays
+from calc.arrays import MIN_VALUE, MAX_VALUE
 
 def out_of_order(a, b, descending):
     if descending:
@@ -36,9 +36,25 @@ def insertion(values, descending=False):
             j = j - 1
         values[j] = current
 
+def counting(values, descending=False):
+    counts = [0] * (MAX_VALUE - MIN_VALUE + 1)
+    for value in values:
+        counts[value - MIN_VALUE] += 1
+    if descending:
+        numbers = reversed(range(len(counts)))
+    else:
+        numbers = range(len(counts))
+    k = 0
+    for number in numbers:
+        for _ in range(counts[number]):
+            values[k] = number + MIN_VALUE
+            k += 1
+
+
 
 METHODS = {
     'bubble': bubble,
     'selection': selection,
-    'insertion': insertion
+    'insertion': insertion,
+    'counting': counting
 }
