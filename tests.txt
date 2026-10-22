@@ -493,22 +493,18 @@ stderr:
 Команда fill
 ===========================================================
 
-Тест 40
-Команда: python mathtool.py fill -c 5 --seed 42
-stdout:
+Тесты 40, 41
+Команда: python mathtool.py fill -c 5 --seed 42 (запустить дважды подряд)
+stdout первого запуска:
 63 -72 -94 89 -30
-Код возврата: 0
-
-Тест 41
-Команда: python mathtool.py fill -c 5 --seed 42
-stdout:
+stdout второго запуска:
 63 -72 -94 89 -30
-Код возврата: 0
+Код возврата: 0 для обоих запусков
 
 Тест 42
 Команда: python mathtool.py fill -c 0
 stderr:
-Ошибка: количество элементов вне диапазона 1..1000000
+Ошибка: количество аргументов вне диапазона 
 Код возврата: 1
 
 Тест 43
@@ -522,3 +518,91 @@ stderr:
 stdout:
 Записано элементов: 5 в файл small.txt
 Код возврата: 0
+===========================================================
+Команда sort
+===========================================================
+
+Тест 45
+Команда: python mathtool.py sort -m bubble -i example.txt
+stdout:
+-76 -5 24 43 81; Массив отсортирован.
+Код возврата: 0
+
+Тест 46
+Команда: python mathtool.py sort -m selection -i example.txt -o example_sorted.txt
+stdout:
+Записано элементов: 5 в файл example_sorted.txt; Массив отсортирован.
+Код возврата: 0
+
+Тест 47
+Команда: python mathtool.py sort -m insertion -i example.txt
+stdout:
+-76 -5 24 43 81; Массив отсортирован.
+Код возврата: 0
+
+Тест 48
+Команда: python mathtool.py sort -m counting -i example.txt --order desc
+stdout:
+81 43 24 -5 -76; Массив отсортирован.
+Код возврата: 0
+
+Тест 49
+Команда: python mathtool.py sort -m bubble -i example.txt --order desc
+stdout:
+81 43 24 -5 -76; Массив отсортирован.
+Код возврата: 0
+
+Тест 50
+Команда: python mathtool.py sort -m selection -i example.txt --order desc
+stdout:
+81 43 24 -5 -76; Массив отсортирован.
+Код возврата: 0
+
+Тест 51
+Команда: python mathtool.py sort -m insertion -i example.txt --order desc
+stdout:
+81 43 24 -5 -76; Массив отсортирован.
+Код возврата: 0
+
+Тест 52
+Команда: python mathtool.py sort -m counting -i example.txt
+stdout:
+-76 -5 24 43 81; Массив отсортирован.
+Код возврата: 0
+
+Тест 53
+Команда: python mathtool.py sort -m bubble -i one.txt
+stdout:
+7; Массив отсортирован.
+Код возврата: 0
+
+Тест 54
+Команда: python mathtool.py sort -m selection -i equal.txt --order desc
+stdout:
+2 2 2; Массив отсортирован.
+Код возврата: 0
+
+Тест 55
+Команда: python mathtool.py sort -m insertion -i sorted.txt
+stdout:
+-76 -5 24 43 81; Массив отсортирован.
+Код возврата: 0
+
+Тест 56
+Команда: python mathtool.py sort -m bubble -i sorted.txt --order desc
+stdout:
+81 43 24 -5 -76; Массив отсортирован.
+Код возврата: 0
+
+Тест 57
+Команда: "4 1 5" | python mathtool.py sort -m bubble
+stdout:
+1 4 5; Массив отсортирован.
+Код возврата: 0
+
+Тест 58
+Команда: python mathtool.py sort -m foo -i example.txt
+stderr:
+usage: mathtool sort [-h] -m {bubble,counting,insertion,selection} [--order {asc,desc}] [-i INPUT] [-o OUTPUT]
+mathtool sort: error: argument -m/--method: invalid choice: 'foo' (choose from 'bubble', 'counting', 'insertion', 'selection')
+Код возврата: 2
