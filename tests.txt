@@ -606,3 +606,54 @@ stderr:
 usage: mathtool sort [-h] -m {bubble,counting,insertion,selection} [--order {asc,desc}] [-i INPUT] [-o OUTPUT]
 mathtool sort: error: argument -m/--method: invalid choice: 'foo' (choose from 'bubble', 'counting', 'insertion', 'selection')
 Код возврата: 2
+===========================================================
+Команда search
+===========================================================
+
+Тест 59
+Команда: python mathtool.py search -v 43 -i sorted.txt
+stdout:
+Значение 43 имеет элемент с индексом 4.
+Код возврата: 0
+
+Тест 60
+Команда: python mathtool.py search -v 15 -i sorted.txt
+stdout:
+Значение 15 не найдено.
+Код возврата: 1
+
+Тест 61
+Команда: python mathtool.py search -v 43 -i example.txt
+stderr:
+Ошибка: массив не упорядочен по возрастанию
+Код возврата: 1
+
+Тест 62
+Команда: python mathtool.py search -v -76 -i sorted.txt
+stdout:
+Значение -76 имеет элемент с индексом 1.
+Код возврата: 0
+
+Тест 63
+Команда: python mathtool.py search -v 81 -i sorted.txt
+stdout:
+Значение 81 имеет элемент с индексом 5.
+Код возврата: 0
+
+Тест 64
+Команда: python mathtool.py search -v 1001 -i sorted.txt
+stderr:
+Ошибка: модуль искомого больше максимального значения
+Код возврата: 1
+
+Тест 65
+Команда: python mathtool.py search -v -1000 -i sorted.txt
+stdout:
+Значение -1000 не найдено.
+Код возврата: 1
+
+Тест 66
+Команда: "24 -76 81 43 -5" | python mathtool.py search -v 43
+stderr:
+Ошибка: массив не упорядочен по возрастанию
+Код возврата: 1
