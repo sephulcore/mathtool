@@ -1,4 +1,5 @@
 import sys
+import time
 from calc import equation
 from calc import stats
 from calc import series
@@ -119,6 +120,7 @@ def handle_integrate(args):
     result = integrate.integrate(func, args.lower, args.upper, args.steps)
     print(f'Значение интеграла: {result:.4f}')
     return 0
+
 def read_array(path=None):
     if path:
         with open(path, encoding="utf-8-sig") as file:
@@ -170,6 +172,7 @@ def handle_fill(args):
 def handle_sort(args):
     array = read_array(args.input)
     method = sorting.METHODS[args.method]
+    measure(f'sort({args.method})', method, [array, args.order == 'desc'])
     method(array, args.order == 'desc')
     if args.output:
         write_array(args.output, array)
@@ -191,7 +194,13 @@ def handle_search(args):
         return 1
     print(f'Значение {args.value} имеет элемент с индексом {index + 1}')
     return 0
-        
+
+def measure(name, oper, parameters):
+    begin = time.perf_counter()
+    result = oper(*parameters)
+    elapsed = time.perf_counter() - begin
+    print(f'Время операции {name}: {elapsed:.6f} с', file=sys.stderr)
+    return result    
 def main(argv):
     parser = build_parser()
     args = parser.parse_args(argv)
