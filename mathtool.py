@@ -122,6 +122,7 @@ def handle_integrate(args):
     return 0
 
 def read_array(path=None):
+    """Читает числа из файла или с клавиатуры и возвращает список целых чисел."""
     if path:
         with open(path, encoding="utf-8-sig") as file:
             text = file.read()
@@ -156,6 +157,7 @@ def read_array(path=None):
     return values
 
 def write_array(path, values):
+    """Записывает числа в файл одной строкой через пробел."""
     with open(path, "w", encoding="utf-8") as file:
         file.write(" ".join(str(x) for x in values)+ "\n")
 
@@ -172,7 +174,7 @@ def handle_fill(args):
 def handle_sort(args):
     array = read_array(args.input)
     method = sorting.METHODS[args.method]
-    measure(f'sort({args.method})', method, [array, args.order == 'desc'])
+    measure(f'sort ({args.method})', method, [array, args.order == 'desc'])
     method(array, args.order == 'desc')
     if args.output:
         write_array(args.output, array)
@@ -196,6 +198,7 @@ def handle_search(args):
     return 0
 
 def measure(name, oper, parameters):
+    """Вызывает oper с parameters, печатает время в stderr и возвращает результат."""
     begin = time.perf_counter()
     result = oper(*parameters)
     elapsed = time.perf_counter() - begin

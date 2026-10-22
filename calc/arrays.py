@@ -4,12 +4,14 @@ MAX_VALUE = 100
 MAX_COUNT = 1_000_000
 MAX_SEARCH = 1000
 def fill(count, low = MIN_VALUE, high = MAX_VALUE, seed = None):
+    """Создаёт список из count случайных целых чисел от low до high включительно."""
     random.seed(seed)
     values = []
     for _ in range(count):
         values.append(random.randint(low, high))
     return values
 def valid_fill(count, low, high):
+    """Проверяет количество и границы для fill."""
     if count < 1 or count > MAX_COUNT:
         raise ValueError('количество аргументов вне допустимого диапазона')
     if low > high:
@@ -18,12 +20,14 @@ def valid_fill(count, low, high):
         raise ValueError('границы значений вне диапазона')
 
 def is_ascending(values):
+    """Возвращает True, если список отсортирован по возрастанию."""
     for i in range(0, len(values) - 1):
         if values[i]> values[i+1]:
             return False
     return True
 
 def binary_search(values, target):
+    """Возвращает индекс target в отсортированном списке или None."""
     left, right = 0, len(values) - 1
     while left <= right:
         middle = (left + right) // 2
